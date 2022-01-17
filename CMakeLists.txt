@@ -1,42 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 project(acceleration_firmware_te0807)
 
-# Default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
-endif()
-
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
-
 find_package(ament_cmake REQUIRED)
-include(cmake/firmware_setup.cmake)  # define only once, here
+include(cmake/firmware_setup.cmake)  # This script is what defines the install firmware script
 
-# # deploy firmware into "firmware" directory, file by file
-# # locate all firmware files, recursively
-# file(GLOB_RECURSE firmware_FILES
-#       "firmware/*"
-#      LIST_DIRECTORIES
-#       true
-# )
-# # NOTE that "${CMAKE_INSTALL_PREFIX}/../firmware" will be at the same
-# #  level as "install", "build" or "log"  if "--merge-install" option is used.
-# #  Otherwise, it'll reside within "install"
-# install(
-#   FILES
-#     ${firmware_FILES}
-#   DESTINATION
-#     ${CMAKE_INSTALL_PREFIX}/../firmware
-# )
-
-
+# install firmware  if not already done
 if (NOT EXISTS ${FIRMWARE_DIR})
-  # Deploy firmware directory into "firmware" directory, file by file
-  #
-  # NOTE that "${CMAKE_INSTALL_PREFIX}/../firmware" will be at the same
-  #  level as "install", "build" or "log"  if "--merge-install" option is used.
-  #  Otherwise, it'll reside within "install"
   install(
     DIRECTORY
       firmware/
@@ -45,32 +14,22 @@ if (NOT EXISTS ${FIRMWARE_DIR})
   )
 endif()  # NOT EXISTS ${FIRMWARE_DIR}
 
-# NOTE:
-# The following scripts avoid the use of CMake EXISTS
-# due to undefined behavior. Refer to the development
-# notes for more details https://gitlab.com/xilinxrobotics/docs/-/issues/9#note_505935065
-# For more details, refer to the xilinx_vitis package.
-
-# To execute logic after the install() CMake command, embed
-# follow-up actions into CMake scripts which get added to the
-# "cmake_install.cmake" script in order
-#     See https://stackoverflow.com/a/10000327
 install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/firmware_setup.cmake")
-# install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/data_permissions.cmake")  # not necessary
-install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/imagebuilder_permissions.cmake")
-install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/sdk.cmake")
-# Generate toolchain, first install template, then execute
+
+## Generate toolchain, first install template, then execute
 install(
   FILES
-    "${CMAKE_SOURCE_DIR}/scripts/generate_toolchain.template.sh"
-    "${CMAKE_SOURCE_DIR}/scripts/kv260.mixin.template"
+    "${CMAKE_SOURCE_DIR}/scripts/te0807.mixin.template"
     "${CMAKE_SOURCE_DIR}/scripts/index.yaml.template"
+    "${CMAKE_SOURCE_DIR}/cmake/toolchain.cmake"
   DESTINATION
     ${CMAKE_BINARY_DIR}
 )
-# install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/decompress_img.cmake")  # removed from firmware
-# install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/generate_toolchain.cmake")  # using mixins instead
+
+
 install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/generate_mixin.cmake")
+
+# I don't understand why this is needed
 install(SCRIPT "${CMAKE_SOURCE_DIR}/cmake/colcon_ignore.cmake")
 
 

@@ -1,5 +1,8 @@
 
-A ROS2 package contaning accleration firmware artifcats to be used with Xilinx Kria Stack
+A ROS2 package contaning accleration firmware artifcats to be used with Xilinx Kria Stack.
+
+Generting `sd_card.img` using. `colcon acceleration linux vanilla --install-dir install-te0807` is not supported
+
 ## Artificats
 TODO
 ## Import Artificats
