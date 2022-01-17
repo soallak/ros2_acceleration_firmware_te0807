@@ -1,0 +1,9 @@
+the_ROM_image:
+{
+   [fsbl_config] a53_x64
+   [bootloader] <te0807/boot/fsbl.elf>
+   [pmufw_image] <te0807/boot/pmufw.elf>
+   [destination_device=pl] <bitstream>
+   [destination_cpu=a53-0, exception_level=el-3, trustzone] <te0807/boot/bl31.elf>
+   [destination_cpu=a53-0, exception_level=el-2] <te0807/boot/u-boot.elf>
+}
