@@ -66,6 +66,7 @@ function import_rootfs {
   mkdir -p $sysroot_dir
   echo "Extracting rootfs $rootfs_tar"
   tar -C $sysroot_dir -x -f $rootfs_tar
+  rm $rootfs_tar
 }
 
 
