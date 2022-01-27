@@ -1,4 +1,4 @@
 *.old
 *.tar
 *.tar.*
-firmware/sysroot/
+firmware/sysroot

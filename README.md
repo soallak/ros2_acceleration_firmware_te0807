@@ -17,7 +17,7 @@ The repository already contains initial artifacts. Only rootfs is missing, the a
 invoked with dummy arguments to only import rootfs 
 
 ```
-./make_firmware.sh  x y z <rootfs-tar-path>
+./make_firmware.sh  x y z <rootfs-path>
 ```
 
 where x and z do not correspond to any existing file.

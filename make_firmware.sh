@@ -75,7 +75,7 @@ FIRMWARE_DIR=$(dirname $0)/firmware
 VITIS_WORKSPACE_PATH=$1 
 VITIS_PFM_NAME=$2
 PETALINUX_PRJ=$3
-ROOTFS_TAR=$4
+ROOTFS=$4
 
 
 if [[ -d $VITIS_WORKSPACE_PATH ]]; then 
@@ -89,7 +89,10 @@ if [[ -d $PETALINUX_PRJ ]]; then
   import_petalinux  $PETALINUX_PRJ $FIRMWARE_DIR
 fi
 
-if [[ -f $ROOTFS_TAR ]]; then 
-  echo "Importing Rootfs... "
-  import_rootfs $ROOTFS_TAR $FIRMWARE_DIR
+if [[ -f $ROOTFS ]]; then 
+  echo "Importing Rootfs "
+  import_rootfs $ROOTFS $FIRMWARE_DIR
+elif [[ -d $ROOTFS ]]; then
+  echo "Creating symlink to $ROOTFS"
+  ln -s $(realpath $ROOTFS) $FIRMWARE_DIR/sysroot
 fi 
