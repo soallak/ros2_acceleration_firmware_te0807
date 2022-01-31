@@ -2,3 +2,5 @@ build:
   te0807:
     cmake-args:
       - "-DCMAKE_TOOLCHAIN_FILE=__TOOLCHAIN_DIR__/toolchain.cmake"
+      - "-DROS_ACCELERATION=ON"
+      - "-DCMAKE_EXECUTE_PROCESS_COMMAND_ECHO=STDOUT"

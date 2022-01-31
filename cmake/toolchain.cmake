@@ -21,8 +21,12 @@ SET(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
+#Library
+#SET(CMAKE_SYSTEM_LIBRARY_PATH ${CMAKE_SYSROOT}/lib ${CMAKE_SYSROOT}/usr/lib/ ${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu ${CMAKE_SYSROOT}/usr/lib/gcc/aarch64-linux-gnu/9/ ${CMAKE_SYSROOT}/lib/aarch64-linux-gnu )
+
 # This is not detected automtically by Vitis, somehow
 INCLUDE_DIRECTORIES(BEFORE SYSTEM ${CMAKE_SYSROOT}/usr/include/aarch64-linux-gnu/)
+
 
 # for the same reason, i do this manually
 SET(LINKER_FLAGS_INIT "-Wl,--allow-shlib-undefined --sysroot=${CMAKE_SYSROOT} -L${CMAKE_SYSROOT}/lib -L${CMAKE_SYSROOT}/usr/lib/ -L${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu -L${CMAKE_SYSROOT}/usr/lib/gcc/aarch64-linux-gnu/9/ -L${CMAKE_SYSROOT}/lib/aarch64-linux-gnu -Wl,-rpath-link=${CMAKE_SYSROOT}/usr/lib/aarch64-linux-gnu,-rpath-link=${CMAKE_SYSROOT}/usr/lib,-rpath-link=${CMAKE_SYSROOT}/lib/aarch64-linux-gnu,-rpath-link=${CMAKE_SYSROOT}/usr/lib/gcc/aarch64-linux-gnu/9/")
